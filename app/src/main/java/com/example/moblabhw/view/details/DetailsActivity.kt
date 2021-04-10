@@ -1,11 +1,12 @@
-package com.example.moblabhw
+package com.example.moblabhw.view.details
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.moblabhw.R
 
-class MainActivity : AppCompatActivity() {
+class DetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_details)
     }
 }
