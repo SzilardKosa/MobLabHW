@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -62,4 +63,8 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$archVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archVersion"
     implementation "androidx.activity:activity-ktx:1.1.0"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 }

@@ -7,7 +7,9 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.moblabhw.R
 import com.example.moblabhw.viewmodel.DetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
     private val detailsViewModel: DetailsViewModel by viewModels()
