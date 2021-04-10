@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MobLabHW</string>
+    <string name="title_movies">Studio Ghibli movies</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="menu_title_movies">Movies</string>
+    <string name="menu_title_favorites">Favorites</string>
 </resources>
