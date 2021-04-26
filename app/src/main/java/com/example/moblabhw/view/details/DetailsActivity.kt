@@ -18,7 +18,8 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
-        detailsViewModel.details.observe(this, Observer {
+        detailsViewModel.getDetails(1030)
+        detailsViewModel.movieDetails.observe(this, Observer {
             details -> Log.d("DETAILS",details.toString())
         })
     }
