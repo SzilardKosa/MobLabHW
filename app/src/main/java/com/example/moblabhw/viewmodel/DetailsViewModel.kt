@@ -1,32 +1,33 @@
 package com.example.moblabhw.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.moblabhw.model.Movie
-import com.example.moblabhw.model.MovieDetails
+import androidx.lifecycle.viewModelScope
+import com.example.moblabhw.model.MovieModel
+import com.example.moblabhw.model.network.MovieDetails
 import com.example.moblabhw.repository.DetailsRepository
 import com.example.moblabhw.repository.FavoritesRepository
+import com.example.moblabhw.repository.MoviesRepository
+import com.example.moblabhw.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val repository: DetailsRepository
+    private val repository: DetailsRepository,
 ) : ViewModel() {
-    val details: MutableLiveData<MovieDetails>
+    val movieDetails: LiveData<DataState<MovieDetails>> = repository.movieDetails
+    val isFavorite: LiveData<Boolean> = repository.isFavorite
 
-    init {
-        details = repository.details
+    fun getDetails(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        repository.getDetails(id)
     }
 
-    fun getDetails() {
-        repository.getDetails()
-    }
-
-    fun toggleFavorite(movieDetails: MovieDetails) {
-        repository.toggleFavorite(movieDetails)
+    fun toggleFavorite(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        repository.toggleFavorite(id)
     }
 
 }

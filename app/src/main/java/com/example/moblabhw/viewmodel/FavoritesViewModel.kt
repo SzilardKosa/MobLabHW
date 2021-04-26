@@ -1,35 +1,35 @@
 package com.example.moblabhw.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.moblabhw.model.Movie
-import com.example.moblabhw.repository.DetailsRepository
+import androidx.lifecycle.viewModelScope
+import com.example.moblabhw.model.MovieModel
 import com.example.moblabhw.repository.FavoritesRepository
 import com.example.moblabhw.repository.MoviesRepository
+import com.example.moblabhw.util.FetchState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val repository: FavoritesRepository
+    private val moviesRepository: MoviesRepository,
+    private val favoritesRepository: FavoritesRepository
 ) : ViewModel() {
-    val allFavorites: MutableLiveData<List<Movie>>
+    val allFavorites: LiveData<List<MovieModel>> = favoritesRepository.allFavorites
+    val fetchState: LiveData<FetchState<Nothing>> = favoritesRepository.fetchState
 
-    init {
-        allFavorites = repository.allFavorites
+    fun getFavorites() = viewModelScope.launch(Dispatchers.IO) {
+        favoritesRepository.getFavorites()
     }
 
-    fun getFavorites() {
-        repository.getFavorites()
+    fun delete(movie:MovieModel) = viewModelScope.launch(Dispatchers.IO) {
+        moviesRepository.delete(movie)
     }
 
-    fun delete(movie: Movie) {
-        repository.delete(movie)
-    }
-
-    fun toggleFavorite(movie: Movie) {
-        repository.toggleFavorite(movie)
+    fun toggleFavorite(movie:MovieModel) = viewModelScope.launch(Dispatchers.IO) {
+        favoritesRepository.toggleFavorite(movie)
     }
 }
