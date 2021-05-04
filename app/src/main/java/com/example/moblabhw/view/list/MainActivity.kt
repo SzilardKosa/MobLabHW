@@ -24,5 +24,6 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_movies, R.id.navigation_favorites))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setOnNavigationItemReselectedListener {  }
     }
 }

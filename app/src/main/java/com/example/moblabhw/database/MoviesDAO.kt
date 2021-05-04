@@ -6,14 +6,17 @@ import com.example.moblabhw.model.db.MovieCacheEntity
 
 @Dao
 interface MoviesDAO {
-    @Query("SELECT * FROM movies")
+    @Query("SELECT * FROM movies ORDER BY start_date DESC")
     fun getAllMovies(): LiveData<List<MovieCacheEntity>>
 
-    @Query("SELECT * FROM movies WHERE is_favorite=1")
+    @Query("SELECT * FROM movies WHERE is_favorite=1 ORDER BY start_date DESC")
     fun getAllFavorites(): LiveData<List<MovieCacheEntity>>
 
     @Query("SELECT * FROM movies WHERE malId=:id")
     suspend fun getMovie(id: Int): MovieCacheEntity
+
+    @Query("SELECT * FROM movies")
+    suspend fun getCache(): List<MovieCacheEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movie: MovieCacheEntity) : Long
