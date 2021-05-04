@@ -29,16 +29,20 @@ constructor(
         // DB: save results with is_favorite = false
         fetchState.postValue(FetchState.Loading)
         try{
-            val networkMovies = moviesApi.searchMovies(
-                                            "anime",
-                                            "",
-                                            "movie",
-                                            21,
-                                            "title",
-                                            "desc")
-            Log.d("Reponse", networkMovies.toString())
-            val movies = networkMapper.mapFromEntityList(networkMovies.results)
-            moviesDAO.insertMoviesList(cacheMapper.mapToEntityList(movies))
+            // Check if the movies are cached already
+            val movies = moviesDAO.getCache()
+            if (movies.size < 20){
+                val networkMovies = moviesApi.searchMovies(
+                                                "anime",
+                                                "",
+                                                "movie",
+                                                21,
+                                                "start_date",
+                                                "asc")
+                Log.d("Reponse", networkMovies.toString())
+                val movies = networkMapper.mapFromEntityList(networkMovies.results)
+                moviesDAO.insertMoviesList(cacheMapper.mapToEntityList(movies))
+            }
             fetchState.postValue(FetchState.Success)
         }catch (e: Exception){
             fetchState.postValue(FetchState.Error(e))
@@ -49,8 +53,8 @@ constructor(
         // (Network: delete movie by id)
         // DB: delete movie from db
         try{
-            moviesApi.deleteMovie(movie.malId)
             moviesDAO.deleteMovie(cacheMapper.mapToEntity(movie))
+            moviesApi.deleteMovie(movie.malId)
         }catch (e: Exception){
             Log.d("Error", e.message.toString())
         }

@@ -39,17 +39,17 @@ constructor(
         // DB: update movie in db
         try{
             val movie = cacheMapper.mapFromEntity(moviesDAO.getMovie(id))
-            movie.isFavorite != movie.isFavorite
+            movie.isFavorite = !movie.isFavorite
             if (movie.isFavorite) {
                 // Post new favorite
-                favoritesApi.newFavorite(movie)
                 moviesDAO.updateMovie(cacheMapper.mapToEntity(movie))
                 isFavorite.postValue(true)
+                favoritesApi.newFavorite(movie)
             } else {
                 // Put update, remove from favorite
-                favoritesApi.updateFavorite(movie.malId, movie)
                 moviesDAO.updateMovie(cacheMapper.mapToEntity(movie))
                 isFavorite.postValue(false)
+                favoritesApi.updateFavorite(movie.malId, movie)
             }
         }catch (e: Exception){
             movieDetails.postValue(DataState.Error(e))

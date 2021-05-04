@@ -41,15 +41,15 @@ constructor(
         // (Network: post or put)
         // DB: update movie in db
         try{
-            movie.isFavorite != movie.isFavorite
+            movie.isFavorite = !movie.isFavorite
             if (movie.isFavorite) {
                 // Post new favorite
-                favoritesApi.newFavorite(movie)
                 moviesDAO.updateMovie(cacheMapper.mapToEntity(movie))
+                favoritesApi.newFavorite(movie)
             } else {
                 // Put update, remove from favorite
-                favoritesApi.updateFavorite(movie.malId, movie)
                 moviesDAO.updateMovie(cacheMapper.mapToEntity(movie))
+                favoritesApi.updateFavorite(movie.malId, movie)
             }
         }catch (e: Exception){
             Log.d("Error", e.message.toString())

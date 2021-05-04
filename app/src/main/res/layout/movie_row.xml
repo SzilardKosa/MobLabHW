@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.example.moblabhw.model.MovieModel" />
+        <variable
+            name="adapter"
+            type="com.example.moblabhw.view.list.movies.adapter.MoviesAdapter" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:onClick="@{() -> adapter.showDetails(movie)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"
+                app:setImageUrl="@{movie.imageUrl}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvMovieTitle"
+                android:text="@{movie.title}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/ivImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMovieRatingTitle"
+                android:text="Rating: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/ivImage"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMovieRating"
+                android:text="@{String.valueOf(movie.score)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/tvMovieRatingTitle"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMovieDateTitle"
+                android:text="Date: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/ivImage"
+                app:layout_constraintBottom_toTopOf="@+id/tvMovieRatingTitle" />
+
+            <TextView
+                android:id="@+id/tvMovieDate"
+                android:text="@{@string/get_year(movie.startDate)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/tvMovieDateTitle"
+                app:layout_constraintBottom_toTopOf="@+id/tvMovieRatingTitle" />
+
+            <TextView
+                android:id="@+id/tvMovieViewsTitle"
+                android:text="Views: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/tvMovieRating"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMovieViews"
+                android:text="@{String.valueOf(movie.members)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/tvMovieViewsTitle"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+<!--https://medium.com/@rashi.karanpuria/create-beautiful-toggle-buttons-in-android-64d299050dfb-->
+            <ToggleButton
+                android:id="@+id/btnFavorite"
+                android:background="@drawable/button_favorite"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="10dp"
+                android:checked="@{movie.favorite}"
+                android:onClick="@{() -> adapter.toggleFavorite(movie)}"
+                android:text=""
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
