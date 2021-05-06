@@ -24,7 +24,7 @@ interface FavoritesApi {
     @POST("favorites")
     suspend fun newFavorite(
         @Body movie: MovieModel
-    ): Void
+    )
 
     /**
      * Delete anime from favorite list by id
@@ -36,5 +36,5 @@ interface FavoritesApi {
     @PUT("favorites/{id}")
     suspend fun updateFavorite(
         @Path("id") id: Int, @Body movie: MovieModel
-    ): Void
+    )
 }

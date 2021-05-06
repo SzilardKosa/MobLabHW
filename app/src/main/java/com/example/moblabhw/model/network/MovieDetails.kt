@@ -12,6 +12,9 @@ class MovieDetails {
     @SerializedName("request_hash")
     var requestHash: String? = null
 
+    @SerializedName("is_favorite")
+    var isFavorite: Boolean? = null
+
     @SerializedName("request_cached")
     var requestCached: Boolean? = null
 

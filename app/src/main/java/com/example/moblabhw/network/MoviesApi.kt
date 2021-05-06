@@ -30,7 +30,7 @@ interface MoviesApi {
     @DELETE("anime/{id}")
     suspend fun deleteMovie(
         @Path("id") id: Int
-    ): Void
+    )
 
     /**
      * Gets search result from Jikan api
