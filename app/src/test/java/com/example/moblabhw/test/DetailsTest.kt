@@ -43,9 +43,13 @@ class DetailsTest {
 
     @Test
     fun test_getDetails(){
+        // Arrange
+
+        // Act
         detailsViewModel.getDetails(0)
         var details = detailsViewModel.movieDetails.getOrAwaitValue()
 
+        // Assert
         if (details is DataState.Success){
             Assert.assertEquals(0, details.data.malId)
             Assert.assertEquals("Test 1", details.data.title)
@@ -57,12 +61,15 @@ class DetailsTest {
 
     @Test
     fun test_toggleFavorite() {
+        // Arrange
         detailsViewModel.getDetails(0)
         var isFavoriteBefore = detailsViewModel.isFavorite.getOrAwaitValue()
 
+        // Act
         detailsViewModel.toggleFavorite(0)
         var isFavoriteAfter = detailsViewModel.isFavorite.getOrAwaitValue()
 
+        // Assert
         Assert.assertEquals(false, isFavoriteBefore)
         Assert.assertEquals(true, isFavoriteAfter)
 

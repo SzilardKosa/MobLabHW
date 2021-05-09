@@ -62,8 +62,13 @@ class MoviesTest {
 
     @Test
     fun test_getMovies(){
+        // Arrange
+
+        // Act
         moviesViewModel.getMovies()
         var movies = moviesViewModel.allMovies.getOrAwaitValue()
+
+        // Assert
         Assert.assertEquals(3, movies.size)
         Assert.assertEquals(
             MovieModel(
@@ -86,11 +91,15 @@ class MoviesTest {
 
     @Test
     fun test_delete(){
+        // Arrange
         moviesViewModel.getMovies()
         var movies = moviesViewModel.allMovies.getOrAwaitValue()
+
+        // Act
         moviesViewModel.delete(movies[0])
         movies = moviesViewModel.allMovies.getOrAwaitValue()
 
+        // Assert
         Assert.assertEquals(2, movies.size)
         Assert.assertThat(movies, not(hasItem(MovieModel(
             malId = 0,
@@ -112,11 +121,15 @@ class MoviesTest {
 
     @Test
     fun test_toggleFavorite() {
+        // Arrange
         moviesViewModel.getMovies()
         var movies = moviesViewModel.allMovies.getOrAwaitValue()
+
+        // Act
         moviesViewModel.toggleFavorite(movies[0])
         movies = moviesViewModel.allMovies.getOrAwaitValue()
 
+        // Assert
         Assert.assertEquals(3, movies.size)
         Assert.assertEquals(true, movies[0].isFavorite)
     }

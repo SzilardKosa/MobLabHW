@@ -66,18 +66,27 @@ class FavoritesTest {
 
     @Test
     fun test_getFavorites(){
+        // Arrange
+
+        // Act
         favoritesViewModel.getFavorites()
         var favorites = favoritesViewModel.allFavorites.getOrAwaitValue()
+
+        // Assert
         Assert.assertEquals(3, favorites.size)
     }
 
     @Test
     fun test_toggleFavorite(){
+        // Arrange
         favoritesViewModel.getFavorites()
         var favorites = favoritesViewModel.allFavorites.getOrAwaitValue()
+
+        // Act
         favoritesViewModel.toggleFavorite(favorites[0])
         favorites = favoritesViewModel.allFavorites.getOrAwaitValue()
 
+        // Assert
         Assert.assertEquals(2, favorites.size)
         Assert.assertEquals(1, favorites[0].malId)
         Assert.assertEquals("Test 2", favorites[0].title)
@@ -85,11 +94,15 @@ class FavoritesTest {
 
     @Test
     fun test_delete(){
+        // Arrange
         favoritesViewModel.getFavorites()
         var favorites = favoritesViewModel.allFavorites.getOrAwaitValue()
+
+        // Act
         favoritesViewModel.delete(favorites[0])
         favorites = favoritesViewModel.allFavorites.getOrAwaitValue()
 
+        // Assert
         Assert.assertEquals(2, favorites.size)
         Assert.assertEquals(1, favorites[0].malId)
         Assert.assertEquals("Test 2", favorites[0].title)
