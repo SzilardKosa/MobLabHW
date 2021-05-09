@@ -6,12 +6,12 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_studioghibli"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_studioghibli_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobLabHW">
-        <activity android:name=".view.details.DetailsActivity"></activity>
+        <activity android:name=".view.details.DetailsActivity" android:theme="@style/Details"></activity>
         <activity android:name=".view.list.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

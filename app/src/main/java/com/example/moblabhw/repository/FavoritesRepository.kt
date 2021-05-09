@@ -12,6 +12,7 @@ import com.example.moblabhw.network.MoviesApi
 import com.example.moblabhw.network.NetworkMapper
 import com.example.moblabhw.util.DataState
 import com.example.moblabhw.util.FetchState
+import java.util.*
 
 class FavoritesRepository
 constructor(
@@ -30,7 +31,29 @@ constructor(
         try{
             // This API call makes no sense with the current setup,
             // because we get the result from the local DB!!!
-            // val networkMovies = favoritesApi.getFavorites()
+            val networkMovies = favoritesApi.getFavorites()
+            val movies: MutableList<MovieModel> = mutableListOf<MovieModel>()
+            networkMovies.forEach { lm ->
+                movies.add(
+                    MovieModel(
+                        isFavorite = lm!!.isFavorite,
+                        malId = lm.malId,
+                        title = lm.title,
+                        score = lm.score,
+                        members = lm.members,
+                        imageUrl = lm.imageUrl,
+                        url = lm.url,
+                        airing = lm.airing,
+                        episodes = lm.episodes,
+                        rated = lm.rated,
+                        type = lm.type,
+                        synopsis = lm.synopsis,
+                        startDate = lm.startDate,
+                        endDate = lm.endDate
+                    )
+                )
+            }
+            moviesDAO.insertMoviesList(cacheMapper.mapToEntityList(movies))
             fetchState.postValue(FetchState.Success)
         }catch (e: Exception){
             fetchState.postValue(FetchState.Error(e))
@@ -41,15 +64,15 @@ constructor(
         // (Network: post or put)
         // DB: update movie in db
         try{
-            movie.isFavorite != movie.isFavorite
+            movie.isFavorite = !movie.isFavorite
             if (movie.isFavorite) {
                 // Post new favorite
-                favoritesApi.newFavorite(movie)
                 moviesDAO.updateMovie(cacheMapper.mapToEntity(movie))
+                favoritesApi.newFavorite(movie)
             } else {
                 // Put update, remove from favorite
-                favoritesApi.updateFavorite(movie.malId, movie)
                 moviesDAO.updateMovie(cacheMapper.mapToEntity(movie))
+                favoritesApi.updateFavorite(movie.malId, movie)
             }
         }catch (e: Exception){
             Log.d("Error", e.message.toString())
